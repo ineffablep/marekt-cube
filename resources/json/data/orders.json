@@ -1,0 +1,234 @@
+{
+    "title": "Orders",
+    "showTabId": "orders-all",
+    "tabs": [
+        {
+            "id": "orders-all",
+            "name": "All",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "orders-pending-acceptance",
+            "name": "Pending Acceptance",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "orders-pending-shipment",
+            "name": "Pending Shipment",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "orders-shipped",
+            "name": "Shipped",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "orders-rejected",
+            "name": "Rejected",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "orders-closed",
+            "name": "Closed",
+            "content": [
+                {
+                    "component": "Grid",
+                    "props": {
+                        "columns": [
+                            {
+                                "id": "orderId",
+                                "dataType": "text",
+                                "name": "Order ID"
+                            },
+                            {
+                                "id": "seller",
+                                "dataType": "text",
+                                "name": "Seller/Store Name"
+                            },
+                            {
+                                "id": "totalPrice",
+                                "dataType": "Total Price",
+                                "name": "number"
+                            },
+                            {
+                                "id": "orderStatus",
+                                "dataType": "text",
+                                "name": "Order Status"
+                            },
+                            {
+                                "id": "orderDate",
+                                "dataType": "date",
+                                "name": "Order Date"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

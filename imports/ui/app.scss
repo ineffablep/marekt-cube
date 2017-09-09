@@ -1,0 +1,63 @@
+.app-main {
+    min-height:80vh;
+    transition: margin-left .5s;
+    padding: 16px;
+}
+.pull-left{
+    float: left !important;
+}
+.pull-right {
+    float: right !important;
+}
+.text-centered{
+    text-align: center;
+}
+.app-button {
+    border:none;
+    display:inline-block;
+    outline:0;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.app-badge,.app-tag{
+    background-color:#253341;
+    color:#ffffff;
+    display:inline-block;
+    padding-left:8px;
+    padding-right:8px;
+    text-align:center}
+.app-badge{
+    border-radius:50%
+}
+.app-page{
+   padding:0.01em 16px;
+}
+.app-page:after,.app-page:before{
+    content:"";
+    display:table;
+    clear:both
+}
+.app-page-tab{
+    border-bottom:3px solid #ccc!important;
+    padding:8px 16px!important
+}
+.app-page-tab:hover {
+    color:#000!important;
+    background-color:#f1f1f1!important
+}
+.app-page-tab-active{
+    border-bottom: 3px solid red !important;
+}

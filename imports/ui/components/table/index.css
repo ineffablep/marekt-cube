@@ -1,0 +1,215 @@
+button {
+    border:none;
+    display:inline-block;
+    outline:0;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.re-tbar-btn{
+    border:1px solid #ccc!important;
+    vertical-align:top;
+}
+.re-action-btns button {
+    margin-right: 4px;
+}
+.re-td-action-btn button{
+    padding: 4px !important;
+}
+.re-excel-green{
+    color: green;
+}
+.re-edit{
+    color: #6371c7;
+}
+.re-delete{
+    color: #ee6b50;
+}
+.re-filtered-btns{
+    float: left;
+}
+.re-action-btns{
+    float: right;
+}
+
+.re-table-container{
+    height: vh;
+    overflow: auto;
+}
+.re-table{
+    border-collapse:collapse;
+    border-spacing:0;
+    display:table;
+    width: 100%;
+    border:1px solid #ccc;
+}
+.re-sort-ionc{
+    float: left;
+    margin:0 4px;
+}
+.re-table tr:nth-child(odd){background-color:#fff}
+.re-table tr:nth-child(even){background-color:#f1f1f1}
+.re-table td,.re-table th{padding:8px 8px;display:table-cell;text-align:left;vertical-align:top}
+.re-table th:first-child,.re-table td:first-child{padding-left:16px}
+.re-table tr {
+    border-bottom:1px solid #ddd;
+}
+.re-table tbody tr:hover {
+    background-color:#ccc
+}
+.re-thead{
+
+}
+.re-thr{
+
+}
+
+.re-tobdy{
+
+}
+.re-th-name {
+    padding: 0 !important;
+}
+.re-th{
+
+}
+.re-tc{
+    
+}
+.re-tr{
+}
+.re-th-icon {
+    float: right;
+    cursor: pointer;
+}
+.re-sfp{
+    overflow: auto;
+    border-top: 2px solid #00AEEF;
+    background-color: #F7F7F7;
+    max-height: 300px;
+    color: #000000;
+    position: absolute;
+    display: block;
+    z-index: 1;
+    box-shadow: 5px 5px 5px #888888;
+}
+.re-sfp-action-btns{
+    float: right;
+}
+.re-sfp-action-btns button {
+    border:1px solid #ccc!important;
+}
+.re-sfp-action-btns button:hover{
+    color:#000!important;
+    background-color:#ccc!important;
+}
+
+.re-sfp-btn-ok{
+   
+}
+.re-sfp-btncancel{
+
+}
+.re-sort-panel{
+
+}
+.re-sort-btn-asc{
+    
+}
+.re-sort-btn-desc{
+    
+}
+.re-sort-asc-text{
+    
+}
+.re-sort-desc-text{
+    
+}
+.re-filter-panel{
+    max-height: 200px;
+    overflow: auto;
+    border:  1px solid  #888888;
+}
+.re-filter-search{
+    padding:8px;
+    border:none;
+    border-bottom:1px solid #ccc;
+    width:100%;
+    text-indent: 20px;
+}
+.re-toolbar-search{
+    width: 100%;
+    position: relative;
+}
+.re-toolbar-search-input{
+    padding:8px 16px;
+    text-indent: 20px;
+    margin-right: 4px;
+    width: 320px;
+}
+.re-toolbar-search .fa-search { 
+    position: absolute;
+    color:#888888;
+    top: 4px;
+    left: 7px;
+    font-size: 15px;
+}
+.re-toolbar-file-upload{
+    display: none;
+}
+.re-toolbar-file-input{
+    display:inline-block;
+    outline:0;
+    border:1px solid #ccc!important;
+    padding:8px 16px;
+    vertical-align:top;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+}
+.re-filter-select-panel{
+    
+}
+.re-filter-checkbox{
+
+}
+.re-filter-checkbox-selectAll{
+    
+}
+.re-filter-paenl-select-text{
+    font-size: 15px;
+    font: normal;
+}
+.re-filter-paenl-selectAll-text{
+
+}
+input[type=checkbox].re-filter-checkbox , .re-filter-checkbox-selectAll{
+	height: 24px;
+	position: relative;
+	top: 6px;
+	width: 24px;
+}
+.search { position: relative; }
+.search .fa-search { 
+  position: absolute;
+  color:#888888;
+  top: 9px;
+  left: 7px;
+  font-size: 15px;
+}

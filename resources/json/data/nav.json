@@ -1,0 +1,108 @@
+[
+    {
+        "nav": {
+            "title": "My Dashboard",
+            "to": "/",
+            "icon": "fa fa-home",
+            "className": "nav-dashboard",
+            "activeClassName": "active-nav-dashboard"
+        }
+    },
+    {
+        "heading": "ECOMMERCE",
+        "children": [
+            {
+                "title": "Orders",
+                "to": "/orders",
+                "icon": "fa fa-table",
+                "badge": 0,
+                "className": "nav-orders",
+                "activeClassName": "active-nav-orders"
+            },
+            {
+                "title": "Products",
+                "to": "/products",
+                "icon": "fa fa-tags",
+                "badge": 0,
+                "className": "nav-products",
+                "activeClassName": "active-nav-products"
+            },
+            {
+                "title": "Accounting",
+                "to": "/accounting",
+                "icon": "fa fa-money",
+                "className": "nav-accounting",
+                "activeClassName": "active-nav-accounting"
+            },
+            {
+                "title": "Reports",
+                "to": "/reports",
+                "icon": "fa fa-bar-chart",
+                "className": "nav-reports",
+                "activeClassName": "active-nav-reports"
+            },
+            {
+                "title": "Logs",
+                "to": "/logs",
+                "icon": "fa fa-book",
+                "className": "nav-logs",
+                "activeClassName": "active-nav-logs"
+            }
+        ]
+    },
+    {
+        "heading": "USER",
+        "children": [
+            {
+                "title": "Sellers",
+                "to": "/sellers",
+                "icon": "fa fa-desktop",
+                "bage": 0,
+                "className": "nav-sellers",
+                "activeClassName": "active-nav-sellers"
+            },
+            {
+                "title": "Suppliers",
+                "to": "/suppliers",
+                "icon": "fa fa-truck",
+                "bage": 0,
+                "className": "nav-suppliers",
+                "activeClassName": "active-nav-suppliers"
+            },
+            {
+                "title": "System",
+                "to": "/system",
+                "icon": "fa fa-user",
+                "className": "nav-system",
+                "activeClassName": "active-nav-system"
+            }
+        ]
+    },
+    {
+        "heading": "SYSTEM",
+        "children": [
+            {
+                "title": "Settings",
+                "to": "/settings",
+                "icon": "fa fa-cog",
+                "badge": 0,
+                "className": "nav-settings",
+                "activeClassName": "active-nav-settings"
+            },
+            {
+                "title": "Help",
+                "to": "/help",
+                "icon": "fa fa-info-circle",
+                "className": "nav-help",
+                "activeClassName": "active-nav-help"
+            },
+            {
+                "title": "Support",
+                "to": "/support",
+                "icon": "fa fa-comments-o",
+                "className": "nav-support",
+                "activeClassName": "active-nav-support"
+            }
+        ]
+    }
+]
