@@ -1,10 +1,37 @@
-import connect from '../lib/connect';
-import './app.scss';
+import React, { Component } from 'react';
+import Layout from './components/Layout';
+import lang from '../../resources/json/lang/en-GB.json';
+import sideNavs from '../../resources/json/data/nav.json';
 
-import { onHideMenu, onShowMenu } from '../actions';
-import AppState from '../state/appState';
+export default class App extends Component {
 
-import Layout from './components/layout';
+    constructor(props) {
+        super(props);
+        this.state = {
+            sideNavStyle: { width: '250px' },
+            mainStyle: { marginLeft: '250px' }
+        };
+    }
 
-const App = connect(AppState, [onHideMenu, onShowMenu])(Layout);
-export default App;
+    onHideMenu() {
+        this.setState({
+            sideNavStyle: { width: '0' },
+            mainStyle: { marginLeft: '0' }
+        });
+    }
+
+    onShowMenu() {
+        this.setState({
+            sideNavStyle: { width: '250px' },
+            mainStyle: { marginLeft: '250px' }
+        });
+    }
+
+    render() {
+        return <Layout lang={lang}
+            sideNavs={sideNavs}
+            sideNavStyle={this.state.sideNavStyle}
+            mainStyle={this.state.mainStyle}
+        />;
+    }
+}
