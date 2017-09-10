@@ -5,8 +5,21 @@
         {
             "id": "orders-all",
             "name": "All",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
+            "query":"orders.fetch",
+            "count":"orders.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color"
+                }
+            },
             "columns": [
                 {
                     "id": "orderId",

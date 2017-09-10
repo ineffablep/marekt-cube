@@ -1,2 +1,2 @@
 
-import '../imports/api/collections';
+import '../imports/api';

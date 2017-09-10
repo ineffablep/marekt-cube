@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import uuid from 'uuid';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import FilteredBtns from './FilteredBtns';
 import './index.css';
 import ToolbarBtns from './ToolbarBtns';
-import moment from 'moment';
+import Pagination from './Pagination';
 
 export class Table extends Component {
     constructor(props) {
@@ -15,12 +16,20 @@ export class Table extends Component {
         this.onSort = this.onSort.bind(this);
         this.onFilterRemoveClick = this.onFilterRemoveClick.bind(this);
         this.onGlobalSearchChange = this.onGlobalSearchChange.bind(this);
-        let filteredData = this.props.filteredData || new Map();
+        this.onColumnChooserClick = this.onColumnChooserClick.bind(this);
+        this.onColumnSelect = this.onColumnSelect.bind(this);
+        this.onPaginationClick = this.onPaginationClick.bind(this);
+        let filteredData = this.props.filteredData || new Map(),
+            totalRows = props.pagination.totalRows || 0,
+            limit = props.pagination.limit || 10;
         this.state = {
             data: this.props.data,
             backData: this.props.data,
+            columns: this.props.columns,
             filteredData: filteredData,
+            totalPages: Math.round(totalRows / limit),
             sortMap: new Map(),
+            showSelect: false,
             filteredKeys: Array.from(filteredData.keys())
         };
     }
@@ -92,56 +101,99 @@ export class Table extends Component {
             });
             this.setState({ data: searchResults });
         }
+    }
 
+    onColumnChooserClick() {
+        this.setState({ showSelect: !this.state.showSelect });
+    }
+
+    onColumnSelect(col) {
+        const columns = this.state.columns;
+        const column = columns.find(_ => _.id === col.id);
+        column.show = !column.show;
+        this.setState({ columns: columns });
+    }
+
+    onPaginationClick(pageNo) {
+        if (pageNo > 0 || pageNo < this.state.totalPages) {
+            this.props.pagination.onPagerClick(pageNo);
+        }
+    }
+
+    onPageSizeChangeClick(selectedPageSize) {
+        this.props.pagination.onSizeChange(selectedPageSize);
     }
 
     render() {
-        const { columns, data, sortFilterPanelIcon, toolbarBtns, onEdit, onDelete,
-            showViewbtn, showDeleteBtn, showEditBtn, onView,
-            filterIcon, filterAppliedIcon, showRowActionBtns, RowActionBtnHeader } = this.props;
-        const colSpan = showRowActionBtns ? columns.length + 1 : columns.length;
-        const { onGlobalSearchChange, ...rest } = toolbarBtns;
+        const { toolbarBtns, sortFilterPanelIcon, tableRow,
+            filterIcon, filterAppliedIcon, rowActionBtnHeader, pagination } = this.props,
+            { editBtn, deleteBtn, viewBtn, customBtns } = tableRow,
+            { showSelect, columns, data, filteredKeys, sortMap, filteredData, totalPages } = this.state,
+            showRowActionBtns = editBtn && editBtn.show || deleteBtn && deleteBtn.show || viewBtn && viewBtn.show || customBtns,
+            colSpan = showRowActionBtns ? columns.length + 1 : columns.length;
+        toolbarBtns.columnChooser.onClick = this.onColumnChooserClick;
+        toolbarBtns.columnChooser.onColumnSelect = this.onColumnSelect;
+        columns.forEach(_ => {
+            if (_.show === undefined) {
+                _.show = true;
+            }
+        });
         return (
-            <div className="re-table-container">
-                <table className="re-table">
-                    <thead className="re-thead">
-                        <tr className="re-tbar">
-                            <th colSpan={colSpan}>
-                                <FilteredBtns
-                                    filteredKeys={this.state.filteredKeys}
-                                    columns={columns}
-                                    onFilterRemoveClick={this.onFilterRemoveClick} />
-                                <ToolbarBtns onGlobalSearchChange={this.onGlobalSearchChange} {...rest}
-                                    data={this.state.data} />
-                            </th>
-                        </tr>
-                        <tr className="re-thr">
-                            {columns.map(_ => <TableHeader {..._} key={uuid.v4()}
-                                data={data}
-                                filterIcon={filterIcon}
-                                filterAppliedIcon={filterAppliedIcon}
-                                onFilter={this.onFilter}
-                                sortInfo={this.state.sortMap.get(_.id) || { type: 'none', icon: this.props.noSortIcon }}
-                                filteredData={this.state.filteredData && this.state.filteredData.get(_.id) ? this.state.filteredData.get(_.id) : []}
-                                onSort={this.onSort}
-                                sortFilterPanelIconClassName={sortFilterPanelIcon} />)}
-                            {showRowActionBtns && <th> {RowActionBtnHeader}</th>}
-                        </tr>
+            <div>
+                <div className="re-table-container">
+                    <table className="re-table">
+                        <thead className="re-thead">
+                            <tr className="re-tbar">
+                                <th colSpan={colSpan}>
+                                    <FilteredBtns
+                                        filteredKeys={filteredKeys}
+                                        columns={columns}
+                                        onFilterRemoveClick={this.onFilterRemoveClick} />
+                                    <ToolbarBtns
+                                        onSearch={this.onGlobalSearchChange}
+                                        {...toolbarBtns}
+                                        columns={columns}
+                                        showSelect={showSelect}
+                                        data={data} />
+                                </th>
+                            </tr>
+                            <tr className="re-thr">
+                                {columns.map(_ =>
+                                    (<TableHeader {..._} key={uuid.v4()}
+                                        {..._}
+                                        data={data}
+                                        filterIcon={filterIcon}
+                                        filterAppliedIcon={filterAppliedIcon}
+                                        onFilter={this.onFilter}
+                                        sortInfo={sortMap.get(_.id) || { type: 'none', icon: this.props.noSortIcon }}
+                                        filteredData={filteredData && filteredData.get(_.id) ? filteredData.get(_.id) : []}
+                                        onSort={this.onSort}
+                                        sortFilterPanelIconClassName={sortFilterPanelIcon} />))}
+                                {showRowActionBtns && <th> {rowActionBtnHeader}</th>}
+                            </tr>
 
-                    </thead>
-                    <tbody className="re-tobdy">
-                        {this.state.data.map(_ => <TableRow key={uuid.v4()}
-                            columns={columns}
-                            row={_}
-                            showDeleteBtn={showDeleteBtn}
-                            showEditBtn={showEditBtn}
-                            showViewbtn={showViewbtn}
-                            onView={onView}
-                            onEdit={onEdit}
-                            onDelete={onDelete} />)}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="re-tobdy">
+                            {data.map(_ =>
+                                (<TableRow key={uuid.v4()}
+                                    columns={columns}
+                                    row={_}
+                                    {...tableRow}
+                                />))}
+                        </tbody>
+                    </table>
+                </div>
+                <Pagination
+                    totalPages={totalPages}
+                    totalRecords={pagination.totalRows || 0}
+                    pageSize={pagination.size || 10}
+                    pageLimit={pagination.limit || 10}
+                    currentPage={pagination.currentPage || 1}
+                    onPageSizeChangeClick={this.onPageSizeChangeClick}
+                    onPaginationClick={this.onPaginationClick}
+                />
             </div>
+
         );
     }
 
@@ -215,6 +267,7 @@ Table.propTypes = {
         id: PropTypes.string.isRequired,
         dataType: PropTypes.string.isRequired,
         name: PropTypes.string,
+        show: PropTypes.bool,
         canFilter: PropTypes.bool,
         canSort: PropTypes.bool,
         canGroup: PropTypes.bool,
@@ -229,28 +282,79 @@ Table.propTypes = {
         style: PropTypes.object
     })).isRequired,
     data: PropTypes.array.isRequired,
-    filteredData: PropTypes.any,
+    filteredData: PropTypes.any,//eslint-disable-line
     sortFilterPanelIcon: PropTypes.string,
     ascIcon: PropTypes.string,
     descIcon: PropTypes.string,
     noSortIcon: PropTypes.string,
     filterIcon: PropTypes.string,
-    RowActionBtnHeader: PropTypes.string,
+    rowActionBtnHeader: PropTypes.string,
     filterAppliedIcon: PropTypes.string,
-    showEditBtn: PropTypes.bool,
-    showDeleteBtn: PropTypes.bool,
-    showViewbtn:PropTypes.bool,
     serverSideFilter: PropTypes.bool,
     serverSideSort: PropTypes.bool,
-    showRowActionBtns: PropTypes.bool,
     onSort: PropTypes.func,
     onFilter: PropTypes.func,
-    onEdit: PropTypes.func,
-    onDelete: PropTypes.func,
-    onView: PropTypes.func,
+    pagination: PropTypes.shape({
+        limit: PropTypes.number,
+        totalRows: PropTypes.number,
+        currentPage: PropTypes.number,
+        size: PropTypes.arrayOf(PropTypes.number),
+        onPagerClick: PropTypes.func,
+        onSizeChange:PropTypes.func
+    }),
+    tableRow: PropTypes.shape({
+        className: PropTypes.string,
+        style: PropTypes.object,
+        editBtn: PropTypes.shape({
+            show: PropTypes.bool,
+            title: PropTypes.string,
+            icon: PropTypes.string,
+            text: PropTypes.string,
+            className: PropTypes.string,
+            onClick: PropTypes.func,
+            isLink: PropTypes.bool,
+            link: PropTypes.string
+        }),
+        viewBtn: PropTypes.shape({
+            show: PropTypes.bool,
+            title: PropTypes.string,
+            icon: PropTypes.string,
+            text: PropTypes.string,
+            className: PropTypes.string,
+            onClick: PropTypes.func,
+            isLink: PropTypes.bool,
+            link: PropTypes.string
+        }),
+        deleteBtn: PropTypes.shape({
+            show: PropTypes.bool,
+            title: PropTypes.string,
+            icon: PropTypes.string,
+            text: PropTypes.string,
+            className: PropTypes.string,
+            onClick: PropTypes.func,
+            isLink: PropTypes.bool,
+            link: PropTypes.string
+        }),
+        customBtns: PropTypes.arrayOf(PropTypes.shape({
+            title: PropTypes.string,
+            icon: PropTypes.string,
+            text: PropTypes.string,
+            className: PropTypes.string,
+            onClick: PropTypes.func,
+            isLink: PropTypes.bool,
+            link: PropTypes.string
+        }))
+    }),
     toolbarBtns: PropTypes.shape({
         onGlobalSearchChange: PropTypes.func,
         showGlobalSearch: PropTypes.bool,
+        columnChooser: PropTypes.shape({
+            show: PropTypes.bool,
+            icon: PropTypes.string,
+            title: PropTypes.string,
+            text: PropTypes.string,
+            className: PropTypes.string
+        }),
         uploadBtn: PropTypes.shape({
             show: PropTypes.bool,
             title: PropTypes.string,
@@ -266,8 +370,7 @@ Table.propTypes = {
             title: PropTypes.string,
             icon: PropTypes.string,
             text: PropTypes.string,
-            className: PropTypes.string,
-            onClick: PropTypes.func
+            className: PropTypes.string
         }),
         addNewBtn: PropTypes.shape({
             show: PropTypes.bool,
@@ -292,10 +395,41 @@ Table.defaultProps = {
     serverSideFilter: false,
     serverSideSort: false,
     customToolbarActionBtns: [],
-    showRowActionBtns: true,
-    RowActionBtnHeader: 'Actions',
+    rowActionBtnHeader: 'Actions',
+    ascIcon: 'fa fa-sort-amount-asc',
+    descIcon: 'fa fa-sort-amount-desc',
+    noSortIcon: 'fa fa-sort',
+    pagination: {
+        totalRows: 0,
+        limit: 10,
+        currentPage: 1,
+        size: [10, 20, 30, 40, 50, 100, 500, 1000]
+
+    },
+    tableRow: {
+        editBtn: {
+            show: true,
+            icon: 'fa fa-edit',
+            title: 'Edit Record'
+        },
+        viewBtn: {
+            show: true,
+            icon: 'fa fa-eye',
+            title: 'View Record'
+        },
+        deleteBtn: {
+            show: true,
+            icon: 'fa fa-trash',
+            title: 'Delete Record'
+        }
+    },
     toolbarBtns: {
         showGlobalSearch: true,
+        columnChooser: {
+            show: true,
+            icon: 'fa fa-bars',
+            title: 'Choose Columns'
+        },
         uploadBtn: {
             show: true,
             icon: 'fa fa-upload',
@@ -313,13 +447,7 @@ Table.defaultProps = {
             icon: 'fa fa-plus-circle',
             title: 'Add New'
         }
-    },
-    ascIcon: 'fa fa-sort-amount-asc',
-    descIcon: 'fa fa-sort-amount-desc',
-    noSortIcon: 'fa fa-sort',
-    showEditBtn: true,
-    showDeleteBtn: true,
-    showViewbtn:true
+    }
 };
 
 export default Table;

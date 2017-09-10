@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SortFilterPanel from './SortFilterPanel';
+import moment from 'moment';
 class TableHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showSortFilterPanel: false,
-            fpWidth: '200px',
+            fpWidth: 200,
             filterData: this.props.filteredData,
-            selectAllChecked: true,
-            sortIcon: this.props.noSortIcon
+            selectAllChecked: true
         };
         this.onSortFilterPanelClick = this.onSortFilterPanelClick.bind(this);
         this.onFilterCancel = this.onFilterCancel.bind(this);
@@ -22,27 +22,23 @@ class TableHeader extends Component {
         this.th = null;
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        const colData = this.props.data.map(_ => _[this.props.id]),
+            uniqData = this.props.data ? [...new Set(colData)] : [];
+        let fdata = this.props.filteredData && this.props.filteredData.length > 0 ? this.props.filteredData : uniqData.map(_ => {
+            return { checked: true, value: _ };
+        });
         if (this.th) {
-            this.setState({ fpWidth: (this.th.offsetWidth - 18) + 'px' });
+            this.setState({ fpWidth: (this.th.offsetWidth - 18) });
         }
-        if (this.props.filteredData && this.props.filteredData.length > 0) {
-            this.setState({
-                filterData: this.props.filteredData,
-                fbData: this.props.filteredData,
-                selectAllChecked: this.props.filteredData.every(_ => _.checked)
-            });
-        } else {
-            const colData = this.props.data.map(_ => _[this.props.id]),
-                uniqData = this.props.data ? [...new Set(colData)] : [],
-                fdata = uniqData.map(_ => {
-                    return { checked: true, value: _ };
-                });
-            this.setState({
-                filterData: fdata,
-                fbData: fdata
-            });
+        if (this.props.dataType === 'date' || this.props.dataType === 'datetime') {
+            fdata.forEach(_ => _.value = moment(_.value).format(this.props.dateFormat));
         }
+        this.setState({
+            filterData: fdata,
+            fbData: fdata,
+            selectAllChecked: fdata.every(_ => _.checked)
+        });
     }
 
     onFilterSearch(e) {
@@ -95,9 +91,9 @@ class TableHeader extends Component {
     }
 
     render() {
-        const { id, dataType, name, canFilter, canSort, style, className, sortInfo, sortFilterPanelIconClassName, headerTextClassName } = this.props;
+        const { id, show, dataType, name, canFilter, canSort, style, className, sortInfo, sortFilterPanelIconClassName, headerTextClassName } = this.props;
         return (
-            <th style={style} className={'re-th ' + className} data-th-id={id} ref={th => this.th = th}>
+            show ? <th style={style} className={'re-th ' + className} data-th-id={id} ref={th => this.th = th}>
                 <span className="re-sort-ionc"> <i className={sortInfo.icon} /> </span>
                 <button className={'re-th-name ' + headerTextClassName}
                     onClick={this.onHeaderSort}> {name} </button>
@@ -121,7 +117,7 @@ class TableHeader extends Component {
                     onSelectAllItems={this.onSelectAllItems}
                 />
                 }
-            </th >
+            </th > : null
         );
     }
 }
@@ -129,10 +125,12 @@ class TableHeader extends Component {
 TableHeader.propTypes = {
     id: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
+    show: PropTypes.bool,
     filteredData: PropTypes.array.isRequired,
     dataType: PropTypes.string,
     name: PropTypes.string,
     canFilter: PropTypes.bool,
+    dateFormat: PropTypes.string,
     canSort: PropTypes.bool,
     canGroup: PropTypes.bool,
     sortFilterPanelIconClassName: PropTypes.string,
@@ -154,7 +152,9 @@ TableHeader.defaultProps = {
     canGroup: true,
     style: {},
     className: '',
+    show: true,
     dataType: 'text',
+    dateFormat: 'DD/MM/YYYY',
     headerTextClassName: '',
     showSortFilterPanel: false
 };

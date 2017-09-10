@@ -101,7 +101,9 @@
     "curly": 1,
     "dot-notation": 1,
     "yoda": 1,
+    "jsx-a11y/label-has-fo":0,
     "jsx-a11y/href-no-hash": 0,
+    "jsx-a11y/no-onchange":0,
     "no-trailing-spaces": 1,
     "no-multi-spaces": 2,
     "no-mixed-spaces-and-tabs": [
