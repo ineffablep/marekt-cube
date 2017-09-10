@@ -57,7 +57,7 @@ button {
 }
 .re-sort-ionc{
     float: left;
-    margin:0 4px;
+    margin:1px 10px;
 }
 .re-table tr:nth-child(odd){background-color:#fff}
 .re-table tr:nth-child(even){background-color:#f1f1f1}

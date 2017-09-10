@@ -1,1 +1,1 @@
-
+export const ALL_ORDERS_ID='orders-all';

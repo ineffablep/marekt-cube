@@ -97,6 +97,7 @@ export class Table extends Component {
 
     render() {
         const { columns, data, sortFilterPanelIcon, toolbarBtns, onEdit, onDelete,
+            showViewbtn, showDeleteBtn, showEditBtn, onView,
             filterIcon, filterAppliedIcon, showRowActionBtns, RowActionBtnHeader } = this.props;
         const colSpan = showRowActionBtns ? columns.length + 1 : columns.length;
         const { onGlobalSearchChange, ...rest } = toolbarBtns;
@@ -132,6 +133,10 @@ export class Table extends Component {
                         {this.state.data.map(_ => <TableRow key={uuid.v4()}
                             columns={columns}
                             row={_}
+                            showDeleteBtn={showDeleteBtn}
+                            showEditBtn={showEditBtn}
+                            showViewbtn={showViewbtn}
+                            onView={onView}
                             onEdit={onEdit}
                             onDelete={onDelete} />)}
                     </tbody>
@@ -232,6 +237,9 @@ Table.propTypes = {
     filterIcon: PropTypes.string,
     RowActionBtnHeader: PropTypes.string,
     filterAppliedIcon: PropTypes.string,
+    showEditBtn: PropTypes.bool,
+    showDeleteBtn: PropTypes.bool,
+    showViewbtn:PropTypes.bool,
     serverSideFilter: PropTypes.bool,
     serverSideSort: PropTypes.bool,
     showRowActionBtns: PropTypes.bool,
@@ -239,7 +247,7 @@ Table.propTypes = {
     onFilter: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
-
+    onView: PropTypes.func,
     toolbarBtns: PropTypes.shape({
         onGlobalSearchChange: PropTypes.func,
         showGlobalSearch: PropTypes.bool,
@@ -308,7 +316,10 @@ Table.defaultProps = {
     },
     ascIcon: 'fa fa-sort-amount-asc',
     descIcon: 'fa fa-sort-amount-desc',
-    noSortIcon: 'fa fa-sort'
+    noSortIcon: 'fa fa-sort',
+    showEditBtn: true,
+    showDeleteBtn: true,
+    showViewbtn:true
 };
 
 export default Table;

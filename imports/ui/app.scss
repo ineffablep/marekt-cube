@@ -50,14 +50,15 @@
     display:table;
     clear:both
 }
-.app-page-tab{
+.app-tab{
+    @extend .app-button;
     border-bottom:3px solid #ccc!important;
     padding:8px 16px!important
 }
-.app-page-tab:hover {
+.app-tab:hover {
     color:#000!important;
     background-color:#f1f1f1!important
 }
-.app-page-tab-active{
-    border-bottom: 3px solid red !important;
+.app-tab-active{
+    border-bottom: 3px solid #E75714 !important;
 }
