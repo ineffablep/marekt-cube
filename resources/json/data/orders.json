@@ -49,10 +49,23 @@
             ]
         },
         {
-            "id": "orders-pending-acceptance",
+            "id": "orders-pending",
             "name": "Pending Acceptance",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
+            "query":"orders.fetch",
+            "count":"orders.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color"
+                }
+            },
             "columns": [
                 {
                     "id": "orderId",
@@ -80,45 +93,25 @@
                     "name": "Order Date"
                 }
             ]
-        },
-        {
-            "id": "orders-pending-shipment",
-            "name": "Pending Shipment",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
-            "columns": [
-                {
-                    "id": "orderId",
-                    "dataType": "text",
-                    "name": "Order ID"
-                },
-                {
-                    "id": "seller",
-                    "dataType": "text",
-                    "name": "Seller/Store Name"
-                },
-                {
-                    "id": "totalPrice",
-                    "name": "Total Price",
-                    "dataType": "number"
-                },
-                {
-                    "id": "orderStatus",
-                    "dataType": "text",
-                    "name": "Order Status"
-                },
-                {
-                    "id": "orderDate",
-                    "dataType": "date",
-                    "name": "Order Date"
-                }
-            ]
-        },
+        }, 
         {
             "id": "orders-shipped",
             "name": "Shipped",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
+            "query":"orders.shipped",
+            "count":"orders.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color"
+                }
+            },
             "columns": [
                 {
                     "id": "orderId",
@@ -150,8 +143,21 @@
         {
             "id": "orders-rejected",
             "name": "Rejected",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
+            "query":"orders.fetch",
+            "count":"orders.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color"
+                }
+            },
             "columns": [
                 {
                     "id": "orderId",
@@ -183,8 +189,21 @@
         {
             "id": "orders-closed",
             "name": "Closed",
-            "showDeleteBtn": false,
-            "showEditBtn": false,
+            "query":"orders.closed",
+            "count":"orders.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color"
+                }
+            },
             "columns": [
                 {
                     "id": "orderId",

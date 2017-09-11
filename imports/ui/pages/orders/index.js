@@ -12,7 +12,7 @@ class OrdersPage extends Component {
         super(props);
         this.onPagerClick = this.onPagerClick.bind(this);
         this.onSizeChange = this.onSizeChange.bind(this);
-
+        this.onTabClick = this.onTabClick.bind(this);
         const pagination = {
             limit: 100,
             size: [
@@ -45,9 +45,7 @@ class OrdersPage extends Component {
     }
 
     componentWillMount() {
-        const tab = this.state.tabs[this.state.selectedTabIndex];
-        this.fetchData(tab.id, tab.query);
-        this.fetchCount(tab.id, tab.count);
+        this.initTab();
     }
 
     onSizeChange(tab, selectedPageLimit) {
@@ -66,6 +64,11 @@ class OrdersPage extends Component {
         this.fetchOrders(tab.id, tab.query, pageNo, skip, tab.pagination.limit);
     }
 
+    onTabClick(i) {
+        this.setState({ selectedTabIndex: i });
+        this.initTab();
+    }
+
     render() {
         const { title } = OrdersJson,
             { tabs, selectedTabIndex } = this.state;
@@ -74,7 +77,7 @@ class OrdersPage extends Component {
                 <header>
                     <h2> {title} </h2>
                 </header>
-                <Tab tabs={tabs} selectedTabIndex={selectedTabIndex}>
+                <Tab tabs={tabs} selectedTabIndex={selectedTabIndex} onClick={this.onTabClick} >
                     {
                         tabs.map(_ => {
                             return (<Table key={uuid.v4()}
@@ -85,6 +88,12 @@ class OrdersPage extends Component {
                 </Tab>
             </div>
         );
+    }
+
+    initTab() {
+        const tab = this.state.tabs[this.state.selectedTabIndex];
+        this.fetchData(tab.id, tab.query);
+        this.fetchCount(tab.id, tab.count);
     }
 
     fetchData(tabId, query, pageNo = 1, skip = 0, limit = 100) {

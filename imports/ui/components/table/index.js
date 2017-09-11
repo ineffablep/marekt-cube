@@ -19,7 +19,7 @@ export class Table extends Component {
         this.onColumnChooserClick = this.onColumnChooserClick.bind(this);
         this.onColumnSelect = this.onColumnSelect.bind(this);
         this.onPaginationClick = this.onPaginationClick.bind(this);
-        let filteredData = this.props.filteredData || new Map(),
+        let filteredData = this.props.filter.filteredData || new Map(),
             totalRows = props.pagination.totalRows || 0,
             limit = props.pagination.limit || 10;
         this.state = {
@@ -35,8 +35,9 @@ export class Table extends Component {
     }
 
     onSort(id, type) {
-        if (this.props.serverSideSort) {
-            this.props.onSort(id, type);
+        const { serverSideSort, noSortIcon, ascIcon, descIcon, onSort } = this.props.sort;
+        if (serverSideSort) {
+            onSort(id, type);
         } else {
             let col = this.props.columns.find(_ => _.id === id);
             if (col) {
@@ -44,11 +45,11 @@ export class Table extends Component {
                 this.setState({ data: sortData, backData: sortData });
             }
         }
-        let icon = this.props.noSortIcon;
+        let icon = noSortIcon;
         if (type === 'asc') {
-            icon = this.props.ascIcon;
+            icon = ascIcon;
         } else if (type === 'desc') {
-            icon = this.props.descIcon;
+            icon = descIcon;
         }
         let map = this.state.sortMap;
         map.set(id, { type, icon });
@@ -56,11 +57,12 @@ export class Table extends Component {
     }
 
     onFilter(id, filteredData) {
+        const { serverSideFilter, onFilter } = this.props.filter;
         let map = this.state.filteredData;
         map.set(id, filteredData);
         this.setState({ filteredData: map, filteredKeys: Array.from(map.keys()) });
-        if (this.props.serverSideFilter) {
-            this.props.onFilter(this.state.filteredData);
+        if (serverSideFilter) {
+            onFilter(this.state.filteredData);
         } else {
             let dataToFilter = this.state.backData;
             this.state.filteredData.forEach((value, id) => {
@@ -87,13 +89,17 @@ export class Table extends Component {
             this.setState({ data: this.state.backData });
             return;
         }
-        if (this.props.serverSideFilter) {
+        if (this.props.filter.serverSideFilter) {
             this.toolbarBtns.onGlobalSearchChange(searchText);
         } else {
             let searchResults = this.state.data.filter(_ => {
                 let res = false;
                 Object.values(_).forEach(item => {
-                    if (item.toUpperCase().includes(searchText.toUpperCase())) {
+                    if (item && typeof item === 'number') {
+                        item = item + '';
+                    }
+
+                    if (item && typeof item === 'string' && item.toUpperCase().includes(searchText.toUpperCase())) {
                         res = true;
                     }
                 });
@@ -125,8 +131,8 @@ export class Table extends Component {
     }
 
     render() {
-        const { toolbarBtns, sortFilterPanelIcon, tableRow,
-            filterIcon, filterAppliedIcon, rowActionBtnHeader, pagination } = this.props,
+        const { toolbarBtns, sortFilterPanelIcon, tableRow, isLoading, filter, sort,
+            rowActionBtnHeader, pagination } = this.props,
             { editBtn, deleteBtn, viewBtn, customBtns } = tableRow,
             { showSelect, columns, data, filteredKeys, sortMap, filteredData, totalPages } = this.state,
             showRowActionBtns = editBtn && editBtn.show || deleteBtn && deleteBtn.show || viewBtn && viewBtn.show || customBtns,
@@ -162,10 +168,10 @@ export class Table extends Component {
                                     (<TableHeader {..._} key={uuid.v4()}
                                         {..._}
                                         data={data}
-                                        filterIcon={filterIcon}
-                                        filterAppliedIcon={filterAppliedIcon}
+                                        filterIcon={filter.icon}
+                                        filterAppliedIcon={filter.appliedIcon}
                                         onFilter={this.onFilter}
-                                        sortInfo={sortMap.get(_.id) || { type: 'none', icon: this.props.noSortIcon }}
+                                        sortInfo={sortMap.get(_.id) || { type: 'none', icon: sort.noSortIcon }}
                                         filteredData={filteredData && filteredData.get(_.id) ? filteredData.get(_.id) : []}
                                         onSort={this.onSort}
                                         sortFilterPanelIconClassName={sortFilterPanelIcon} />))}
@@ -174,12 +180,12 @@ export class Table extends Component {
 
                         </thead>
                         <tbody className="re-tobdy">
-                            {data.map(_ =>
+                            {isLoading ? data.map(_ =>
                                 (<TableRow key={uuid.v4()}
                                     columns={columns}
                                     row={_}
                                     {...tableRow}
-                                />))}
+                                />)) : <div className="re-table-loader"> <i className="fa fa-spin fa-spinner fa-2x" /> </div>}
                         </tbody>
                     </table>
                 </div>
@@ -282,25 +288,30 @@ Table.propTypes = {
         style: PropTypes.object
     })).isRequired,
     data: PropTypes.array.isRequired,
-    filteredData: PropTypes.any,//eslint-disable-line
     sortFilterPanelIcon: PropTypes.string,
-    ascIcon: PropTypes.string,
-    descIcon: PropTypes.string,
-    noSortIcon: PropTypes.string,
-    filterIcon: PropTypes.string,
     rowActionBtnHeader: PropTypes.string,
-    filterAppliedIcon: PropTypes.string,
-    serverSideFilter: PropTypes.bool,
-    serverSideSort: PropTypes.bool,
-    onSort: PropTypes.func,
-    onFilter: PropTypes.func,
+    isLoading: PropTypes.bool,
+    sort: PropTypes.shape({
+        ascIcon: PropTypes.string,
+        descIcon: PropTypes.string,
+        noSortIcon: PropTypes.string,
+        serverSideSort: PropTypes.bool,
+        onSort: PropTypes.func
+    }),
+    filter: PropTypes.shape({
+        filteredData: PropTypes.any,//eslint-disable-line
+        icon: PropTypes.string,
+        appliedIcon: PropTypes.string,
+        onFilter: PropTypes.func,
+        serverSideFilter: PropTypes.bool
+    }),
     pagination: PropTypes.shape({
         limit: PropTypes.number,
         totalRows: PropTypes.number,
         currentPage: PropTypes.number,
         size: PropTypes.arrayOf(PropTypes.number),
         onPagerClick: PropTypes.func,
-        onSizeChange:PropTypes.func
+        onSizeChange: PropTypes.func
     }),
     tableRow: PropTypes.shape({
         className: PropTypes.string,
@@ -393,12 +404,19 @@ Table.propTypes = {
 Table.defaultProps = {
     data: [],
     serverSideFilter: false,
-    serverSideSort: false,
     customToolbarActionBtns: [],
     rowActionBtnHeader: 'Actions',
-    ascIcon: 'fa fa-sort-amount-asc',
-    descIcon: 'fa fa-sort-amount-desc',
-    noSortIcon: 'fa fa-sort',
+    sort: {
+        ascIcon: 'fa fa-sort-amount-asc',
+        descIcon: 'fa fa-sort-amount-desc',
+        noSortIcon: 'fa fa-sort',
+        serverSideSort: false
+    },
+    filter: {
+        filterIcon: 'fa fa-filter',
+        appliedIcon: 'fa fa-filter',
+        serverSideFilter: false
+    },
     pagination: {
         totalRows: 0,
         limit: 10,

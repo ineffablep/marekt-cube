@@ -28,12 +28,12 @@ export default class App extends Component {
     }
 
     render() {
-        return <Layout lang={lang}
+        return (<Layout lang={lang}
             sideNavs={sideNavs}
             onHideMenu={this.onHideMenu}
             onShowMenu={this.onShowMenu}
             sideNavStyle={this.state.sideNavStyle}
             mainStyle={this.state.mainStyle}
-        />;
+        />);
     }
 }

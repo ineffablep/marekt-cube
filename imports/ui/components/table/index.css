@@ -63,8 +63,9 @@ select , button {
     border:1px solid #ccc;
     font-weight: 600;
 }
-.re-pagination-btns button,select {
-   
+.no-tb-border {
+    border-bottom: none;
+    border-top: none;
 }
 .pull-right{
     float: right;
@@ -98,17 +99,21 @@ select , button {
     cursor: pointer;
 }
 .re-sfp{
-    overflow: auto;
     border-top: 2px solid #00AEEF;
     background-color: #F7F7F7;
-    max-height: 300px;
     color: #000000;
     position: absolute;
     display: block;
     z-index: 1;
     box-shadow: 5px 5px 5px #888888;
 }
+.re-filter-select-panel{
+    overflow: auto;
+    max-height: 200px;
+    background-color: #F7F7F7;
+}
 .re-sfp-action-btns{
+    background-color: #F7F7F7;
     float: right;
 }
 .re-sfp-action-btns button {
@@ -121,9 +126,11 @@ select , button {
 
 .re-filter-panel{
     border:  1px solid  #888888;
+    font-weight: normal;
 }
 .re-filter-search{
     padding:8px 4px;
+    width: 95%;
     border:none;
     border-bottom:1px solid #ccc;
     text-indent: 20px;
@@ -181,10 +188,10 @@ select , button {
     font-size: 13px;
 }
 input[type=checkbox].re-filter-checkbox , .re-filter-checkbox-selectAll{
-	height: 24px;
+	height: 16px;
 	position: relative;
 	top: 6px;
-	width: 24px;
+	width: 16px;
 }
 .search { position: relative; }
 .search .fa-search { 

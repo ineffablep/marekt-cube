@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Table from '../table';
 import uuid from 'uuid';
 
 class Tab extends Component {
@@ -12,15 +11,18 @@ class Tab extends Component {
             tabs: props.tabs
         };
     }
+
     componentDidMount() {
         this.onTabClick(this.state.selectedTabIndex);
     }
+
     onTabClick(i) {
         const tabs = this.state.tabs;
         tabs.forEach(_ => _.className = '');
         const tab = tabs[i];
         tab.className = 'app-tab-active';
         this.setState({ selectedTabIndex: i, tabs: tabs });
+        this.props.onClick(i);
     }
 
     renderContent() {
@@ -32,20 +34,19 @@ class Tab extends Component {
     }
 
     render() {
-        const { name, title } = this.props;
         return (
             <div className="app-tab-component">
                 <div className="app-tabs">
                     {
                         this.state.tabs.map((_, i) =>
-                            <button key={uuid.v4()}
+                            (<button key={uuid.v4()}
                                 className={'app-tab ' + _.className}
                                 style={{ width: (100 / this.state.tabs.length) + '%' }}
                                 onClick={() => { this.onTabClick(i); }}>
                                 <i className={_.icon + ' tab-icon'} />
                                 <span className="tab-text ">  {_.name} </span>
                                 {_.badge && _.badge > 0 && <span className="app-badge"> {_.badge} </span>}
-                            </button>)
+                            </button>))
                     }
                 </div>
 
@@ -60,6 +61,7 @@ class Tab extends Component {
 
 Tab.propTypes = {
     selectedTabIndex: PropTypes.number,
+    onClick: PropTypes.func,
     children: PropTypes.array,
     tabs: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
