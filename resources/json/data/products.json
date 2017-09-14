@@ -1,0 +1,156 @@
+{
+    "title": "Products",
+    "selectedTabIndex": 0,
+    "tabs": [
+        {
+            "id": "products-all",
+            "name": "All",
+            "query": "products.fetch",
+            "count": "products.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": true,
+                    "title": "Edit Product",
+                    "className": "app-primary-color"
+                },
+                "deleteBtn": {
+                    "show": true,
+                    "title": "Delete Product",
+                    "className": "app-primary-color"
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Product",
+                    "className": "app-primary-color"
+                }
+            },
+            "columns": [
+                {
+                    "id": "handle",
+                    "dataType": "text",
+                    "name": "Handle"
+                },
+                {
+                    "id": "title",
+                    "dataType": "text",
+                    "name": "Title"
+                },
+                {
+                    "id": "vendor",
+                    "name": "Vendor",
+                    "dataType": "text"
+                },
+                {
+                    "id": "available",
+                    "dataType": "text",
+                    "name": "Available"
+                },
+                {
+                    "id": "status",
+                    "dataType": "text",
+                    "name": "Status"
+                }
+            ]
+        },
+        {
+            "id": "products-pending",
+            "name": "Pending pending",
+            "query": "products.pending",
+            "count": "products.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": true,
+                    "title": "Edit Product",
+                    "className": "app-primary-color"
+                },
+                "deleteBtn": {
+                    "show": true,
+                    "title": "Delete Product",
+                    "className": "app-primary-color"
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Product",
+                    "className": "app-primary-color"
+                }
+            },
+            "columns": [
+                {
+                    "id": "handle",
+                    "dataType": "text",
+                    "name": "Handle"
+                },
+                {
+                    "id": "title",
+                    "dataType": "text",
+                    "name": "Title"
+                },
+                {
+                    "id": "vendor",
+                    "name": "Vendor",
+                    "dataType": "text"
+                },
+                {
+                    "id": "available",
+                    "dataType": "text",
+                    "name": "Available"
+                },
+                {
+                    "id": "status",
+                    "dataType": "text",
+                    "name": "Status"
+                }
+            ]
+        },
+        {
+            "id": "products-approved",
+            "name": "Approved",
+            "query": "products.approved",
+            "count": "products.count",
+            "tableRow": {
+                "editBtn": {
+                    "show": true,
+                    "title": "Edit Product",
+                    "className": "app-primary-color"
+                },
+                "deleteBtn": {
+                    "show": true,
+                    "title": "Delete Product",
+                    "className": "app-primary-color"
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Product",
+                    "className": "app-primary-color"
+                }
+            },
+            "columns": [
+                {
+                    "id": "handle",
+                    "dataType": "text",
+                    "name": "Handle"
+                },
+                {
+                    "id": "title",
+                    "dataType": "text",
+                    "name": "Title"
+                },
+                {
+                    "id": "vendor",
+                    "name": "Vendor",
+                    "dataType": "text"
+                },
+                {
+                    "id": "available",
+                    "dataType": "text",
+                    "name": "Available"
+                },
+                {
+                    "id": "status",
+                    "dataType": "text",
+                    "name": "Status"
+                }
+            ]
+        }
+    ]
+}

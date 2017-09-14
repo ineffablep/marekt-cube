@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SortFilterPanel from './SortFilterPanel';
-import moment from 'moment';
+import dateformat from 'dateformat';
 class TableHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showSortFilterPanel: false,
-            fpWidth: 200,
             filterData: this.props.filteredData,
             selectAllChecked: true
         };
@@ -19,20 +18,17 @@ class TableHeader extends Component {
         this.onFilterSearch = this.onFilterSearch.bind(this);
         this.onSort = this.onSort.bind(this);
         this.onHeaderSort = this.onHeaderSort.bind(this);
-        this.th = null;
+        this.th = { offsetWidth: 400 };
     }
 
     componentWillMount() {
         const colData = this.props.data.map(_ => _[this.props.id]),
             uniqData = this.props.data ? [...new Set(colData)] : [];
         let fdata = this.props.filteredData && this.props.filteredData.length > 0 ? this.props.filteredData : uniqData.map(_ => {
-            return { checked: true, value: _ };
+            return { checked: true, value: _, dataType: this.props.dataType, format: this.props.dateFormat };
         });
-        if (this.th) {
-            this.setState({ fpWidth: (this.th.offsetWidth - 18) });
-        }
         if (this.props.dataType === 'date' || this.props.dataType === 'datetime') {
-            fdata.forEach(_ => _.value = moment(_.value).format(this.props.dateFormat));
+            fdata.forEach(_ => _.value = dateformat(_.value, this.props.dateFormat));
         }
         this.setState({
             filterData: fdata,
@@ -42,8 +38,13 @@ class TableHeader extends Component {
     }
 
     onFilterSearch(e) {
-        let fd = e.target.value ? this.state.filterData.filter(_ => _.value.toLowerCase().includes(e.target.value.toLowerCase())) : this.state.fbData;
-        this.setState({ filterData: fd });
+        let value = e.target.value;
+        if (value) {
+            const fd = this.state.filterData.filter(_ => (_.value + '').toLowerCase().includes(value.toLowerCase()));
+            this.setState({ filterData: fd });
+        } else {
+            this.setState({ filterData: this.state.fbData });
+        }
     }
 
     onSortFilterPanelClick(e) {
@@ -105,7 +106,7 @@ class TableHeader extends Component {
                 }
                 {this.state.showSortFilterPanel && <SortFilterPanel
                     id={id}
-                    width={this.state.fpWidth}
+                    width={this.th.offsetWidth - 18}
                     dataType={dataType}
                     data={this.state.filterData}
                     onSort={this.onSort}
@@ -154,7 +155,7 @@ TableHeader.defaultProps = {
     className: '',
     show: true,
     dataType: 'text',
-    dateFormat: 'DD/MM/YYYY',
+    dateFormat: 'dd/mm/yyyy',
     headerTextClassName: '',
     showSortFilterPanel: false
 };

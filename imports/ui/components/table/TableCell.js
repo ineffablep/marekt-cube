@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
+import dateformat from 'dateformat';
 const TableCell = ({ row, column, className, style }) => {
     let cellVal = row[column.id];
     if (column.dataType && (column.dataType === 'date' || column.dataType === 'dateTime')) {
-        cellVal = moment(cellVal).format('DD/MM/YYYY');
+        cellVal = dateformat(cellVal, column.dateFormat || 'dd/mm/yyyy');
     }
     return (
         <td className={'re-tc ' + className} style={style}> {cellVal} </td>

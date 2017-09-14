@@ -1,3 +1,6 @@
+a {
+    text-decoration: none;
+}
 select , button {
     border:none;
     display:inline-block;
@@ -67,6 +70,9 @@ select , button {
     border-bottom: none;
     border-top: none;
 }
+.re-td-loader{
+    text-align: center;
+}
 .pull-right{
     float: right;
 }
@@ -103,6 +109,7 @@ select , button {
     background-color: #F7F7F7;
     color: #000000;
     position: absolute;
+    max-width: 600px;
     display: block;
     z-index: 1;
     box-shadow: 5px 5px 5px #888888;
@@ -140,7 +147,7 @@ select , button {
     position: relative;
 }
 .re-toolbar-search-input{
-    padding:8px 16px;
+    padding:7px 16px;
     text-indent: 20px;
     margin-right: 4px;
     width: 320px;
@@ -159,7 +166,7 @@ select , button {
     display:inline-block;
     outline:0;
     border:1px solid #ccc!important;
-    padding:8px 16px;
+    padding:7px 16px;
     vertical-align:top;
     overflow:hidden;
     text-decoration:none;

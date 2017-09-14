@@ -5,8 +5,77 @@
         {
             "id": "orders-all",
             "name": "All",
-            "query":"orders.fetch",
-            "count":"orders.count",
+            "query": "orders.fetch",
+            "count": "orders.count",
+            "toolbarBtns": {
+                "addNewBtn": {
+                    "show": false
+                },
+                "columnChooser":{
+                    "show":true
+                },
+                "uploadBtn":{
+                    "show":true
+                },
+                "exportBtn":{
+                    "show":true
+                }
+            },
+            "tableRow": {
+                "editBtn": {
+                    "show": false
+                },
+                "deleteBtn": {
+                    "show": false
+                },
+                "viewBtn": {
+                    "show": true,
+                    "title": "View Order Line",
+                    "className": "app-primary-color",
+                    "isLink":true,
+                    "link":"/orders/view" // id will be dynamically added by table
+                }
+            },
+            "columns": [
+                {
+                    "id": "select",
+                    "dataType": "checkbox",
+                    "isUnBoundColumn": true // this is unbound column , as data didn't have select , 
+                    //table will add select to data for checkboxes
+                },
+                {
+                    "id": "orderId",
+                    "dataType": "text",
+                    "name": "Order ID",
+                    "isPrimaryKey": true // Because Mongo _id is object not string
+                },
+                {
+                    "id": "seller",
+                    "dataType": "text",
+                    "name": "Seller/Store Name"
+                },
+                {
+                    "id": "totalPrice",
+                    "name": "Total Price",
+                    "dataType": "number"
+                },
+                {
+                    "id": "orderStatus",
+                    "dataType": "text",
+                    "name": "Order Status"
+                },
+                {
+                    "id": "orderDate",
+                    "dataType": "date",
+                    "name": "Order Date"
+                }
+            ]
+        },
+        {
+            "id": "orders-pending",
+            "name": "Pending Acceptance",
+            "query": "orders.pending",
+            "count": "orders.pending.count",
             "tableRow": {
                 "editBtn": {
                     "show": false
@@ -49,56 +118,10 @@
             ]
         },
         {
-            "id": "orders-pending",
-            "name": "Pending Acceptance",
-            "query":"orders.fetch",
-            "count":"orders.count",
-            "tableRow": {
-                "editBtn": {
-                    "show": false
-                },
-                "deleteBtn": {
-                    "show": false
-                },
-                "viewBtn": {
-                    "show": true,
-                    "title": "View Order Line",
-                    "className": "app-primary-color"
-                }
-            },
-            "columns": [
-                {
-                    "id": "orderId",
-                    "dataType": "text",
-                    "name": "Order ID"
-                },
-                {
-                    "id": "seller",
-                    "dataType": "text",
-                    "name": "Seller/Store Name"
-                },
-                {
-                    "id": "totalPrice",
-                    "name": "Total Price",
-                    "dataType": "number"
-                },
-                {
-                    "id": "orderStatus",
-                    "dataType": "text",
-                    "name": "Order Status"
-                },
-                {
-                    "id": "orderDate",
-                    "dataType": "date",
-                    "name": "Order Date"
-                }
-            ]
-        }, 
-        {
             "id": "orders-shipped",
             "name": "Shipped",
-            "query":"orders.shipped",
-            "count":"orders.count",
+            "query": "orders.shipped",
+            "count": "orders.shipped.count",
             "tableRow": {
                 "editBtn": {
                     "show": false
@@ -143,8 +166,8 @@
         {
             "id": "orders-rejected",
             "name": "Rejected",
-            "query":"orders.fetch",
-            "count":"orders.count",
+            "query": "orders.rejected",
+            "count": "orders.rejected.count",
             "tableRow": {
                 "editBtn": {
                     "show": false
@@ -189,8 +212,8 @@
         {
             "id": "orders-closed",
             "name": "Closed",
-            "query":"orders.closed",
-            "count":"orders.count",
+            "query": "orders.closed",
+            "count": "orders.closed.count",
             "tableRow": {
                 "editBtn": {
                     "show": false

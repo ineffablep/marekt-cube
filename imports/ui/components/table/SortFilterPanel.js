@@ -29,6 +29,9 @@ const SortFilterPanel = ({
             descIcon = 'fa fa-sort-numeric-desc';
             ascText = 'Sort Smallest to Largest';
             descText = 'Sort Largest to Smallest';
+        } else if (dataType === 'date' || dataType === 'datetime') {
+            ascText = 'Sort Newest to Oldest';
+            descText = 'Sort Oldest to Newest';
         }
     }
 
